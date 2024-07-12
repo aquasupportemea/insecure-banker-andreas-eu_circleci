@@ -27,8 +27,8 @@ jobs:
         env:
 #          AQUA_KEY: ${{ secrets.AQUA_KEY }}
 #          AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
-          AQUA_KEY: Vg1nANMtVhokkWAVW7dvHa
-          AQUA_SECRET: uVjeLYjO91iGIJhb09iEbJ4A9wWrZttfpfk
+          AQUA_KEY: p8CwCsghXCZaw77GUBFfoZ
+          AQUA_SECRET: w9I7B0N5o41DtgDl1TeIjVUohH2iewRHqjB
           GITHUB_TOKEN: ${{ github.token }}
           AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
           CSPM_URL: https://eu-1.api.cloudsploit.com
