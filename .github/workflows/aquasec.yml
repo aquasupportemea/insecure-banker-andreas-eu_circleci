@@ -29,8 +29,8 @@ jobs:
               curl -vvv https://connect.eu-1.codesec.aquasec.com
 
       - name: Run Aqua scanner
-#         uses: docker://aquasec/aqua-scanner
-        uses: docker://aquasec/aqua-scanner:v0.179.2
+        uses: docker://aquasec/aqua-scanner
+#         uses: docker://aquasec/aqua-scanner:v0.179.2
         with:
 #          args: trivy fs --scanners config,vuln,secret .
           args: trivy fs --scanners misconfig,vuln,secret .
@@ -47,5 +47,5 @@ jobs:
           AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
           CSPM_URL: https://eu-1.api.cloudsploit.com
           TRIVY_RUN_AS_PLUGIN: 'aqua'
-#           TRIVY_DEBUG: true
+          TRIVY_DEBUG: true
           # For http/https proxy configuration add env vars: HTTP_PROXY/HTTPS_PROXY, CA-CRET (path to CA certificate)
