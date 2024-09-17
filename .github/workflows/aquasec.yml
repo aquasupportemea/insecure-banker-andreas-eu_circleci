@@ -29,8 +29,8 @@ jobs:
               curl -vvv https://connect.eu-1.codesec.aquasec.com
 
       - name: Run Aqua scanner
-#        uses: docker://aquasec/aqua-scanner
-        uses: docker://aquasec/aqua-scanner:v0.180.1
+        uses: docker://aquasec/aqua-scanner
+#         uses: docker://aquasec/aqua-scanner:v0.180.1
         with:
 #          args: trivy fs --scanners config,vuln,secret .
           args: trivy fs --scanners misconfig,vuln,secret .
