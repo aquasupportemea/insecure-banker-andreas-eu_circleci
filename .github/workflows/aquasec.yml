@@ -10,8 +10,8 @@ on:
       - opened
       
 jobs:
-  checkout:
-    name: Checkout
+  Trivy:
+    name: Trivy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -65,7 +65,6 @@ jobs:
           # For http/https proxy configuration add env vars: HTTP_PROXY/HTTPS_PROXY, CA-CRET (path to CA certificate)
 
 
-jobs:
   SBOM:
     name: SBOM
     runs-on: ubuntu-latest
