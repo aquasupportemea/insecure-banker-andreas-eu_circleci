@@ -10,8 +10,8 @@ on:
       - opened
       
 jobs:
-  Trivy:
-    name: Trivy
+  TRIVY:
+    name: TRIVY
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -65,15 +65,15 @@ jobs:
           # For http/https proxy configuration add env vars: HTTP_PROXY/HTTPS_PROXY, CA-CRET (path to CA certificate)
 
 
-  SBOM:
-    name: SBOM
+  BILLY:
+    name: BILLY
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       
       - name: Build docker image
-        run: docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
+        run: docker build -t aquasupportemea/insecure-bank-app2:${{ github.sha }} .
         
       - name: SBOM Generation - Manifest Generation
 #        if: success()  # This step will only run if when ALL previous steps have succeeded - https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
