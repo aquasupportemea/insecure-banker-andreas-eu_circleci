@@ -86,10 +86,12 @@ jobs:
 
           docker image list
           id
-          pwd &&
-              ls -l . &&
-              ls -l / &&
-              git config --global --add safe.directory /github/workspace
+          # pwd &&
+              # ls -l . &&
+              # ls -l / &&
+              # git config --global --add safe.directory /github/workspace
+              
+          echo "GH_token: "${{ github.token }}
 
           ./billy generate \
             # --access-token "${{ secrets.GITHUB_TOKEN }}" \
