@@ -67,9 +67,7 @@ jobs:
       # Runs docker build 
       - name: Build docker image
         run: |
-          echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
-          # docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
-          docker build -t aquasupportemea/insecure-bank-app:${{ env.TAG }} .
+          docker build -t aquasupportemea/insecure-bank-app:latest .
           docker image list
           id
         
@@ -99,8 +97,7 @@ jobs:
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://eu-1.api.cloudsploit.com \
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
-            # --artifact-path "aquasupportemea/insecure-bank-app:${{ github.sha }}"
-            --artifact-path "aquasupportemea/insecure-bank-app:${{ env.TAG }}"
+            --artifact-path "aquasupportemea/insecure-bank-app:latest"
             # --artifact-path .
 
             # The docker image name:tag of the newly built image
