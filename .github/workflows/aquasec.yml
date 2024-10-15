@@ -23,7 +23,7 @@ jobs:
          args: trivy fs --sast --reachability --scanners misconfig,vuln,secret --db-repository=registry.aquasec.com/trivy-db:2 --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 --java-db-repository=registry.aquasec.com/trivy-java-db:1 /github/workspace
           
         env:
-          OVERRIDE_RUN_ID: 696969
+          # OVERRIDE_RUN_ID: 696969
           ENABLE_TRIVY_STDOUT: 'true'
           TRIVY_USERNAME: ${{ secrets.AQUADEV_USERNAME }}
           TRIVY_PASSWORD: ${{ secrets.AQUADEV_PASS }}
@@ -56,7 +56,7 @@ jobs:
           fi
           BINDIR="." sh install.sh
           rm install.sh install.sh.checksum
-          export OVERRIDE_RUN_ID=696969
+          # export OVERRIDE_RUN_ID=696969
           ./billy generate \
             --access-token "${{ secrets.GITHUB_TOKEN }}" \
             --aqua-key "${{ secrets.AQUA_KEY }}" \
