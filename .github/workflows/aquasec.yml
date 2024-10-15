@@ -67,7 +67,7 @@ jobs:
       # Runs docker build 
       - name: Build docker image
         run: |
-          docker build -t aquasupportemea/insecure-bank-app:latest .
+          docker build -t insecure-bank-app:latest .
           docker image list
           id
         
@@ -97,7 +97,7 @@ jobs:
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://eu-1.api.cloudsploit.com \
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
-            --artifact-path 'aquasupportemea/insecure-bank-app:latest'
+            --artifact-path insecure-bank-app:latest
             # --artifact-path .
 
             # The docker image name:tag of the newly built image
