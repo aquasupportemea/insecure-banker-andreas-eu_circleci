@@ -7,7 +7,6 @@ on:
 
 jobs:
   SBOM_generation_pipeline:
-#    needs: Aqua_code_scanning_pipeline
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +14,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build docker image
-        # run: sudo docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
         run: docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
       
       - name: SBOM Generation
