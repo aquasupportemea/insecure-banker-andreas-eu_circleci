@@ -91,17 +91,12 @@ jobs:
               # ls -l / &&
               # git config --global --add safe.directory /github/workspace
               
-          echo "GH_token: "${{ github.token }}
-
           ./billy generate \
             # --access-token "${{ secrets.GITHUB_TOKEN }}" \
             --access-token "${{ github.token }}" \
-            --aqua-key nouJFbPaVuXElxuXgeD9j8 \
-            --aqua-secret EhTdRr4vGI6NrsHptAj1A4kkYNCGl8bnSkR \
-            # --aqua-key "${{ secrets.AQUA_KEY }}" \
-            # --aqua-secret "${{ secrets.AQUA_SECRET }}" \
+            --aqua-key "${{ secrets.AQUA_KEY }}" \
+            --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://eu-1.api.cloudsploit.com \
-            # --artifact-path "my-image-name:${{ env.tag-version }}" 
             --artifact-path insecure-bank-app:latest
             # --artifact-path .
 
