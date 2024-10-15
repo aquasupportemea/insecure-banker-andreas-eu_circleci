@@ -15,7 +15,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build docker image
-        run: sudo docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
+        # run: sudo docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
+        run: docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
       
       - name: SBOM Generation
 #        if: success()  # This step will only run if when ALL previous steps have succeeded - https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
