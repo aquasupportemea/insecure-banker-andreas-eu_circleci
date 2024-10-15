@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.AQUADEV_USERNAME }}
           password: ${{ secrets.AQUADEV_PASS }}
       
-      - name: Aqua code scanning(SCA,IaC and SAST)
+      - name: Aqua code scanning (SCA,IaC and SAST)
         uses: docker://aquasec/aqua-scanner
         with:
           # args: trivy fs --scanners misconfig,vuln,secret --sast .
@@ -66,7 +66,7 @@ jobs:
       
       # Runs docker build 
       - name: Build docker image
-        run: sudo docker build -t aquasupportemea/insecure-bank-app:${{ github.sha }} .
+        run: sudo docker build -t docker.io/aquasupportemea/insecure-bank-app:${{ github.sha }} .
       
       - name: SBOM Generation / Manifest Generation
         run: |
@@ -85,7 +85,7 @@ jobs:
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://eu-1.api.cloudsploit.com \
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
-            --artifact-path "aquasupportemea/insecure-bank-app:${{ github.sha }}"
+            --artifact-path "docker.io/aquasupportemea/insecure-bank-app:${{ github.sha }}"
 
             # The docker image name:tag of the newly built image
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
