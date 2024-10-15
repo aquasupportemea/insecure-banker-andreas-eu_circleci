@@ -89,7 +89,8 @@ jobs:
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://eu-1.api.cloudsploit.com \
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
-            --artifact-path "aquasupportemea/insecure-bank-app:${{ github.sha }}"
+            # --artifact-path "aquasupportemea/insecure-bank-app:${{ github.sha }}"
+            --artifact-path .
 
             # The docker image name:tag of the newly built image
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
