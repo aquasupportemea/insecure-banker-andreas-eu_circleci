@@ -83,6 +83,14 @@ jobs:
           fi
           BINDIR="." sh install.sh
           rm install.sh install.sh.checksum
+
+          docker image list
+          id
+          pwd &&
+              ls -l . &&
+              ls -l / &&
+              git config --global --add safe.directory /github/workspace
+
           ./billy generate \
             --access-token "${{ secrets.GITHUB_TOKEN }}" \
             --aqua-key "${{ secrets.AQUA_KEY }}" \
