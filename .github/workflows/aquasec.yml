@@ -53,6 +53,7 @@ jobs:
           # To enable reachability scanning, add: --reachability
           # To enable npm/dotnet/gradle non-lock file scanning, add: --package-json / --dotnet-proj / --gradle
         env:
+          OVERRIDE_RUN_ID: 696969
           ENABLE_TRIVY_STDOUT: 'true'
           TRIVY_USERNAME: ${{ secrets.AQUADEV_USERNAME }}
           TRIVY_PASSWORD: ${{ secrets.AQUADEV_PASS }}
@@ -87,12 +88,13 @@ jobs:
           fi
           BINDIR="." sh install.sh
           rm install.sh install.sh.checksum
+          export OVERRIDE_RUN_ID=696969
           ./billy generate \
             --access-token "${{ secrets.GITHUB_TOKEN }}" \
             --aqua-key "${{ secrets.AQUA_KEY }}" \
             --aqua-secret "${{ secrets.AQUA_SECRET }}" \
             --cspm-url https://eu-1.api.cloudsploit.com \
-            --artifact-path "aquasupportemea/insecure-bank-app:${{ github.sha }}"
+            --artifact-path "aquasupportemea/insecure-bank-app2:${{ github.sha }}"
 
             # The docker image name:tag of the newly built image
             # --artifact-path "my-image-name:${{ env.tag-version }}" 
