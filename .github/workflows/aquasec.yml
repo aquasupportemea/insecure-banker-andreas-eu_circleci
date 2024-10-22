@@ -56,7 +56,6 @@ jobs:
           fi
           BINDIR="." sh install.sh
           rm install.sh install.sh.checksum
-          # export OVERRIDE_RUN_ID=696969
           ./billy generate \
             --access-token "${{ secrets.GITHUB_TOKEN }}" \
             --aqua-key "${{ secrets.AQUA_KEY }}" \
