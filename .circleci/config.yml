@@ -1,10 +1,10 @@
 version: 2.1
 
-executors:
-  default:
-    docker:
-      - image: cimg/base:2024.10
-    # working_directory: ~/repo
+# executors:
+  # default:
+    # docker:
+      # - image: cimg/base:2024.10
+    # # working_directory: ~/repo
 
 jobs:
   TRIVY:
