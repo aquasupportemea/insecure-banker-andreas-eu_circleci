@@ -44,6 +44,7 @@ jobs:
           name: Build docker image
           command: | 
             docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
+            docker image ls
             # docker build -t aquasupportemea/insecure-bank-app:01 .
 
       - run:
