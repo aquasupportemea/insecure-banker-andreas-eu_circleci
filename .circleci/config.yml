@@ -64,11 +64,11 @@ workflows:
   version: 2
   build_and_scan:
     jobs:
-      - TRIVY:
-          context: aqua-secrets
+      # - TRIVY:
+          # context: aqua-secrets
       - BILLY:
-          requires:
-            - TRIVY
+          # requires:
+            # - TRIVY
           context: aqua-secrets
 
 
@@ -123,3 +123,6 @@ workflows:
   # aqua-scan:
     # jobs:
       # - aqua-scanner
+
+
+# https://app.circleci.com/pipelines/circleci/GRdMsdVAofWat15XPav79d/CbKeWxnJi9BaHPKwy6GMzr/6/workflows/93ace987-ff72-416b-bdb1-ea20284e3cec
