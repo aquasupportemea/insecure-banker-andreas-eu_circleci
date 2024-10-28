@@ -34,7 +34,7 @@ jobs:
 
   BILLY:
     docker:
-      - image: ubuntu:latest
+      - image: cimg/base:2024.10
     steps:
       - checkout
       - setup_remote_docker:
