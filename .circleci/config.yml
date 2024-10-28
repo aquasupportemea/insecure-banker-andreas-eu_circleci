@@ -7,32 +7,29 @@ version: 2.1
     # ## working_directory: ~/repo
 
 jobs:
-  # TRIVY:
-    # docker:
-      # - image: aquasec/aqua-scanner
-    # steps:
-      # - checkout
-      # # - setup_remote_docker:
-          # # version: default  
-          # # docker_layer_caching: true
-      # - run:
-          # name: Aqua code scanning (SCA, IaC, SAST)
-          # command: |
-            # trivy fs --sast --reachability --scanners misconfig,vuln,secret \
-            # --db-repository=registry.aquasec.com/trivy-db:2 \
-            # --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
-            # --java-db-repository=registry.aquasec.com/trivy-java-db:1 \
-            # /github/workspace
-          # environment:
-            # ENABLE_TRIVY_STDOUT: 'true'
-            # TRIVY_USERNAME: $TRIVY_USERNAME
-            # TRIVY_PASSWORD: $TRIVY_PASSWORD
-            # AQUA_KEY: $AQUA_KEY
-            # AQUA_SECRET: $AQUA_SECRET
-            # GITHUB_TOKEN: $GITHUB_TOKEN
-            # AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
-            # CSPM_URL: https://eu-1.api.cloudsploit.com
-            # TRIVY_RUN_AS_PLUGIN: 'aqua'
+  TRIVY:
+    docker:
+      - image: aquasec/aqua-scanner
+    steps:
+      - checkout
+      - run:
+          name: Aqua code scanning (SCA, IaC, SAST)
+          command: |
+            trivy fs --sast --reachability --scanners misconfig,vuln,secret \
+            --db-repository=registry.aquasec.com/trivy-db:2 \
+            --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
+            --java-db-repository=registry.aquasec.com/trivy-java-db:1 \
+            /github/workspace
+          environment:
+            ENABLE_TRIVY_STDOUT: 'true'
+            TRIVY_USERNAME: $TRIVY_USERNAME
+            TRIVY_PASSWORD: $TRIVY_PASSWORD
+            AQUA_KEY: $AQUA_KEY
+            AQUA_SECRET: $AQUA_SECRET
+            GITHUB_TOKEN: $GITHUB_TOKEN
+            AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
+            CSPM_URL: https://eu-1.api.cloudsploit.com
+            TRIVY_RUN_AS_PLUGIN: 'aqua'
 
   BILLY:
     docker:
@@ -71,13 +68,12 @@ workflows:
   version: 2
   build_and_scan:
     jobs:
-      # - TRIVY:
-          # context: aqua-secrets
-      - BILLY
-      # - BILLY:
+      - TRIVY:
+          context: aqua-secrets
+      - BILLY:
           # requires:
             # - TRIVY
-          # context: aqua-secrets
+          context: aqua-secrets
 
 
 
