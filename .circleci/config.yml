@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: ubuntu:latest
+      - image: cimg/base:2024.10
     working_directory: ~/repo
 
 jobs:
@@ -34,8 +34,7 @@ jobs:
 
   BILLY:
     docker:
-      # - image: cimg/base:2024.10
-      - image: cimg/base:latest
+      - image: cimg/base:2024.10
     steps:
       - checkout
       - setup_remote_docker:
