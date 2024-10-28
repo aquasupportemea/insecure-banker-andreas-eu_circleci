@@ -1,10 +1,10 @@
 version: 2.1
 
-executors:
-  default:
-    docker:
-      - image: cimg/base:2024.10
-    ## working_directory: ~/repo
+# executors:
+  # default:
+    # docker:
+      # - image: cimg/base:2024.10
+    # ## working_directory: ~/repo
 
 jobs:
   TRIVY:
@@ -12,9 +12,9 @@ jobs:
       - image: aquasec/aqua-scanner
     steps:
       - checkout
-      - setup_remote_docker:
-          version: default  
-          docker_layer_caching: true
+      # - setup_remote_docker:
+          # version: default  
+          # docker_layer_caching: true
       - run:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
