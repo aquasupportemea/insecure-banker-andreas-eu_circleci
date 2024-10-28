@@ -4,7 +4,7 @@ version: 2.1
   # default:
     # docker:
       # - image: cimg/base:2024.10
-    # # working_directory: ~/repo
+    # # # working_directory: ~/repo
 
 jobs:
   TRIVY:
