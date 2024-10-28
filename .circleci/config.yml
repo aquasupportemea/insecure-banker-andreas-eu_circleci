@@ -37,7 +37,19 @@ jobs:
       - image: ubuntu:latest
     steps:
       - checkout
-      - setup_remote_docker
+      # - setup_remote_docker
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+
+ # - run:
+          # name: Build Docker image
+          # command: |
+            # TAG=0.1.$CIRCLE_BUILD_NUM
+            # docker build -t $DOCKERHUB_USERNAME/circleci-new-docker-example:$TAG .
+
+
       - run:
           name: Build docker image
           command: docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
