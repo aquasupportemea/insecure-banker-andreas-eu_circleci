@@ -1,31 +1,74 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
+executors:
+  default:
     docker:
-      # Specify the version you desire here
-      # See: https://circleci.com/developer/images/image/cimg/base
-      - image: cimg/base:current
+      - image: ubuntu:latest
+    working_directory: ~/repo
 
-    # Add steps to the job
-    # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
+jobs:
+  TRIVY:
+    docker:
+      - image: aquasec/aqua-scanner
     steps:
-      # Checkout the code as the first step.
       - checkout
+      - setup_remote_docker:
+          version: 20.10.7
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Aqua code scanning (SCA, IaC, SAST)
+          command: |
+            trivy fs --sast --reachability --scanners misconfig,vuln,secret \
+            --db-repository=registry.aquasec.com/trivy-db:2 \
+            --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
+            --java-db-repository=registry.aquasec.com/trivy-java-db:1 \
+            /github/workspace
+          environment:
+            ENABLE_TRIVY_STDOUT: 'true'
+            TRIVY_USERNAME: $AQUADEV_USERNAME
+            TRIVY_PASSWORD: $AQUADEV_PASS
+            AQUA_KEY: $AQUA_KEY
+            AQUA_SECRET: $AQUA_SECRET
+            GITHUB_TOKEN: $GITHUB_TOKEN
+            AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
+            CSPM_URL: https://eu-1.api.cloudsploit.com
+            TRIVY_RUN_AS_PLUGIN: 'aqua'
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
+  BILLY:
+    docker:
+      - image: ubuntu:latest
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.7
+      - run:
+          name: Build docker image
+          command: docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
+      - run:
+          name: SBOM Generation - Manifest Generation
+          command: |
+            export BILLY_SERVER=https://billy.eu-1.codesec.aquasec.com
+            curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
+            curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
+            if ! cat install.sh.checksum | sha256sum --check; then
+              echo "install.sh checksum failed"
+              exit 1
+            fi
+            BINDIR="." sh install.sh
+            rm install.sh install.sh.checksum
+            ./billy generate \
+              --access-token "${GITHUB_TOKEN}" \
+              --aqua-key "${AQUA_KEY}" \
+              --aqua-secret "${AQUA_SECRET}" \
+              --cspm-url https://eu-1.api.cloudsploit.com \
+              --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
+
 workflows:
-  say-hello-workflow: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  version: 2
+  build_and_scan:
     jobs:
-      - say-hello
+      - TRIVY:
+          context: aqua-secrets
+      - BILLY:
+          requires:
+            - TRIVY
+          context: aqua-secrets
