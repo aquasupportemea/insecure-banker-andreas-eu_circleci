@@ -7,6 +7,7 @@ jobs:
     steps:
       - checkout
       - run: |
+          export GITHUB_TOKEN=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
           export AQUA_KEY=RyLxPZ2NhiOpdwJgq0kr6c
           export AQUA_SECRET=v2FxPrdAWqFnua2ZmH3JdHspgpeGdUxL12w
           export AQUA_URL=https://api.eu-1.supply-chain.cloud.aquasec.com
