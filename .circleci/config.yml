@@ -13,7 +13,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.7
+          # version: 20.10.7
       - run:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
@@ -39,7 +39,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.7
+          # version: 20.10.7
       - run:
           name: Build docker image
           command: docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
