@@ -73,7 +73,8 @@ workflows:
     jobs:
       # - TRIVY:
           # context: aqua-secrets
-      - BILLY:
+      - BILLY
+      # - BILLY:
           # requires:
             # - TRIVY
           # context: aqua-secrets
