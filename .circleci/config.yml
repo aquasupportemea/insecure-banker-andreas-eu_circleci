@@ -12,7 +12,7 @@ jobs:
       - image: aquasec/aqua-scanner
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
           version: default  
           docker_layer_caching: true
       - run:
