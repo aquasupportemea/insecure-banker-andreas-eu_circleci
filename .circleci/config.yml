@@ -34,7 +34,8 @@ jobs:
 
   BILLY:
     docker:
-      - image: cimg/base:2024.10
+      # - image: cimg/base:2024.10
+      - image: cimg/base:latest
     steps:
       - checkout
       - setup_remote_docker:
@@ -43,8 +44,8 @@ jobs:
       - run:
           name: Build docker image
           command: | 
-            # docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
-            docker build -t aquasupportemea/insecure-bank-app:01 .
+            docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
+            # docker build -t aquasupportemea/insecure-bank-app:01 .
 
       - run:
           name: SBOM Generation - Manifest Generation
@@ -63,8 +64,8 @@ jobs:
               --aqua-key "${AQUA_KEY}" \
               --aqua-secret "${AQUA_SECRET}" \
               --cspm-url https://eu-1.api.cloudsploit.com \
-              --artifact-path "aquasupportemea/insecure-bank-app::01"
-              # --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
+              --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
+              # --artifact-path "aquasupportemea/insecure-bank-app::01"
 
 workflows:
   version: 2
