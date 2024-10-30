@@ -53,7 +53,7 @@ jobs:
             BINDIR="." sh install.sh
             rm install.sh install.sh.checksum
             
-            ./billy generate -v --aqua-key BJREb08hkDnNUnLcDU3u3m --aqua-secret 8zMGwednY02MUlNPBt3VtFzeFt0h1LARznT --access-token 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 --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
+            ./billy generate -v --cspm-url https://eu-1.api.cloudsploit.com --aqua-key BJREb08hkDnNUnLcDU3u3m --aqua-secret 8zMGwednY02MUlNPBt3VtFzeFt0h1LARznT --access-token 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 --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
 
             # ./billy generate \
               # --access-token "${GITHUB_TOKEN}" \
