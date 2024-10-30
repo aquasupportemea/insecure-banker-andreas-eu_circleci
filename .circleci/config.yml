@@ -42,12 +42,10 @@ jobs:
 - run: 
           name: "Release Artifact Generation"
           command: |
-            
             echo $GITHUB_TOKEN 
             echo $AQUA_KEY
             echo $AQUA_SECRET
             docker image ls
-            
             export BILLY_SERVER=https://billy.eu-1.codesec.aquasec.com
             curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
             curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
