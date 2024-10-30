@@ -58,9 +58,9 @@ jobs:
             BINDIR="." sh install.sh
             rm install.sh install.sh.checksum
             ./billy generate \
-              --access-token $GITHUB_TOKEN \
-              --aqua-key $AQUA_KEY \
-              --aqua-secret $AQUA_SECRET \
+              --access-token ${GITHUB_TOKEN} \
+              --aqua-key ${AQUA_KEY} \
+              --aqua-secret ${AQUA_SECRET} \
               --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
 
 
@@ -155,3 +155,6 @@ workflows:
 
 
 # https://app.circleci.com/pipelines/circleci/GRdMsdVAofWat15XPav79d/CbKeWxnJi9BaHPKwy6GMzr/6/workflows/93ace987-ff72-416b-bdb1-ea20284e3cec
+
+# API Key: BJREb08hkDnNUnLcDU3u3m
+# Secret: 8zMGwednY02MUlNPBt3VtFzeFt0h1LARznT
