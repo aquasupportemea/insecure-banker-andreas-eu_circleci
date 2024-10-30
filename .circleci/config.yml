@@ -67,7 +67,7 @@ jobs:
       - run: 
           name: "Release Artifact Generation"
           command: |
-            docker image exists "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}" ; echo $?
+            docker image inspect "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
             export BILLY_SERVER=https://billy.codesec.aquasec.com
             curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
             curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
