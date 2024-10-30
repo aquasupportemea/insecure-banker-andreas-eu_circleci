@@ -39,7 +39,7 @@ jobs:
           name: Build docker image
           command: | 
             docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
-            docker image ls
+            docker image lsdocker image ls
               
       # - run:
           # name: SBOM Generation - Manifest Generation
@@ -67,6 +67,7 @@ jobs:
       - run: 
           name: "Release Artifact Generation"
           command: |
+            docker image exists "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}" ; echo $?
             export BILLY_SERVER=https://billy.codesec.aquasec.com
             curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
             curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
