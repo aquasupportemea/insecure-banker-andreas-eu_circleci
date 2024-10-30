@@ -82,11 +82,13 @@ jobs:
               --aqua-key YHoZUEfNBfiGyLDtgllTUS \
               --aqua-secret r4iBdY59UDN1N7s5nl0PsCik3srqD5peSYu \
               --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
+            
+            echo "billy health"
+            ./billy health
+            echo "printenv"
+            printenv
 
-              # The docker image name:tag of the newly built image
-              # --artifact-path "my-image-name:${TAG_VERSION}" 
-              # OR the path to the root folder of your project. I.e my-repo/my-app 
-              # --artifact-path $MY_APP_ROOT              
+              
 
 workflows:
   version: 2.1
