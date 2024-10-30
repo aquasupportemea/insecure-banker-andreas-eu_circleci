@@ -39,7 +39,7 @@ jobs:
           name: Build docker image
           command: | 
             docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
-            docker image lsdocker image ls
+            docker image ls
               
       # - run:
           # name: SBOM Generation - Manifest Generation
