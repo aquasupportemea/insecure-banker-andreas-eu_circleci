@@ -27,8 +27,10 @@ jobs:
 
   BILLY:
     docker:
-#      - image: cimg/base:2024.10
-      - image: cimg/base:stable
+      # - image: cimg/base:2024.10
+      # - image: cimg/base:stable
+      - image: cimg/base:current
+
     steps:
       - checkout
       - setup_remote_docker:
@@ -60,7 +62,7 @@ jobs:
               --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
 
 workflows:
-  version: 2
+  # version: 2
   build_and_scan:
     jobs:
       # - TRIVY:
