@@ -1,6 +1,6 @@
 version: 2.1
 
-# jobs:
+jobs:
   # TRIVY:
     # docker:
       # - image: aquasec/aqua-scanner
