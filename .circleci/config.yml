@@ -63,12 +63,12 @@ workflows:
   version: 2
   build_and_scan:
     jobs:
-      - TRIVY:
-          context: aqua-secrets
-      # - BILLY:
+      # - TRIVY:
+          # context: aqua-secrets
+      - BILLY:
           # # requires:
             # # - TRIVY
-          # context: aqua-secrets
+          # # context: aqua-secrets
 
 
 
