@@ -31,9 +31,9 @@ jobs:
 
     steps:
       - checkout
-      - setup_remote_docker:
-          version: default  
-          docker_layer_caching: true
+      # - setup_remote_docker:
+          # version: default  
+          # docker_layer_caching: true
       - run:
           name: Build docker image
           command: | 
@@ -76,7 +76,7 @@ jobs:
             BINDIR="." sh install.sh
             rm install.sh install.sh.checksum
             ./billy generate \
-              --access-token $GITHUB_TOKEN \
+              --access-token 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 \
               --aqua-key YHoZUEfNBfiGyLDtgllTUS \
               --aqua-secret r4iBdY59UDN1N7s5nl0PsCik3srqD5peSYu \
               --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
@@ -160,3 +160,6 @@ workflows:
 # NA
 # API Key: YHoZUEfNBfiGyLDtgllTUS
 # Secret: r4iBdY59UDN1N7s5nl0PsCik3srqD5peSYu
+
+# AndreasMGHToken
+# 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
