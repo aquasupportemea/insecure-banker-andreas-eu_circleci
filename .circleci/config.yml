@@ -116,8 +116,10 @@ jobs:
             CSPM_URL: https://eu-1.api.cloudsploit.com
             TRIVY_RUN_AS_PLUGIN: 'aqua'
   BILLY:
-    docker:
-      - image: cimg/base:2024.10
+    executor:
+      name: base
+    # docker:
+      # - image: cimg/base:2024.10
     steps:
       - checkout
       - setup_remote_docker:
