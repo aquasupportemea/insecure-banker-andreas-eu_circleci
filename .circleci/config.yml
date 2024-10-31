@@ -15,7 +15,7 @@ jobs:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
             export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
-			trivy fs --sast --reachability --scanners misconfig,vuln,secret \
+            trivy fs --sast --reachability --scanners misconfig,vuln,secret \
             --db-repository=registry.aquasec.com/trivy-db:2 \
             --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
             --java-db-repository=registry.aquasec.com/trivy-java-db:1 \
@@ -44,7 +44,7 @@ jobs:
           name: SBOM Generation - Manifest Generation
           command: |
             export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
-			export BILLY_SERVER=https://billy.eu-1.codesec.aquasec.com
+            export BILLY_SERVER=https://billy.eu-1.codesec.aquasec.com
             curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
             curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
             if ! cat install.sh.checksum | sha256sum --check; then
