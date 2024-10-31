@@ -14,7 +14,6 @@ jobs:
       - run:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
-            export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
             trivy fs --sast --reachability --scanners misconfig,vuln,secret \
             --db-repository=registry.aquasec.com/trivy-db:2 \
             --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
@@ -30,6 +29,7 @@ jobs:
             AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
             CSPM_URL: https://eu-1.api.cloudsploit.com
             TRIVY_RUN_AS_PLUGIN: 'aqua'
+            CIRCLE_REPOSITORY_URL: https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
 
   BILLY:
     docker:
@@ -66,8 +66,8 @@ workflows:
       - TRIVY:
           context: aqua-secrets
       - BILLY:
-          requires:
-            - TRIVY
+          # requires:
+            # - TRIVY
           context: aqua-secrets
 
 #
