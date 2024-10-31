@@ -15,7 +15,7 @@ jobs:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
             export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
-            trivy fs --sast --reachability --scanners misconfig,vuln,secret --db-repository=registry.aquasec.com/trivy-db:2 --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 --java-db-repository=registry.aquasec.com/trivy-java-db:1 .
+            trivy fs --sast --reachability --scanners misconfig,vuln,secret --db-repository=public.ecr.aws/aquasecurity/trivy-db:2 --checks-bundle-repository=public.ecr.aws/aquasecurity/trivy-checks:1 --java-db-repository=public.ecr.aws/aquasecurity/trivy-java-db:1 .
           environment:
             ENABLE_TRIVY_STDOUT: 'true'
             TRIVY_USERNAME: $TRIVY_USERNAME
