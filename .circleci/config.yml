@@ -22,11 +22,11 @@ jobs:
             /github/workspace
           environment:
             ENABLE_TRIVY_STDOUT: 'true'
-            TRIVY_USERNAME: ${TRIVY_USERNAME}
-            TRIVY_PASSWORD: ${TRIVY_PASSWORD}
+            TRIVY_USERNAME: $TRIVY_USERNAME
+            TRIVY_PASSWORD: $TRIVY_PASSWORD
             # AQUA_KEY: ${AQUA_KEY}
             # AQUA_SECRET: ${AQUA_SECRET}
-            GITHUB_TOKEN: ${GITHUB_TOKEN}
+            GITHUB_TOKEN: $GITHUB_TOKEN
             AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
             CSPM_URL: https://eu-1.api.cloudsploit.com
             TRIVY_RUN_AS_PLUGIN: 'aqua'
