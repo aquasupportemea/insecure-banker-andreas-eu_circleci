@@ -189,23 +189,23 @@ workflows:
           # requires:
             # - Build Docker image
           # context: cicd-orchestrator
-          scanner_url: https://82fb8f75da.cloud.aquasec.com
-          built_docker_image_file: /tmp/workspace/built-docker-images.txt
-          skip_remote_docker_step: true
-          pre-steps:
-            - attach_workspace:
-                at: /tmp/workspace
-            - setup_remote_docker:
-                version: default
-            - keeper/env-export:
-                secret-url: keeper://QeHHkvALPob4pgs1hMd9Gw/custom_field/ScannerToken
-                var-name: SCANNER_TOKEN
-            - keeper/env-export:
-                secret-url: keeper://LYg-wdlM5UDzSqFFH6Kyig/field/login
-                var-name: AQUA_USERNAME
-            - keeper/env-export:
-                secret-url: keeper://LYg-wdlM5UDzSqFFH6Kyig/field/password
-                var-name: AQUA_PASSWORD
-            - gravitee/docker-load-image-from-workspace:
-                directory: /tmp/workspace
-                filename: aquasec-orb-test-project
+          # scanner_url: https://82fb8f75da.cloud.aquasec.com
+          # built_docker_image_file: /tmp/workspace/built-docker-images.txt
+          # skip_remote_docker_step: true
+          # pre-steps:
+            # - attach_workspace:
+                # at: /tmp/workspace
+            # - setup_remote_docker:
+                # version: default
+            # - keeper/env-export:
+                # secret-url: keeper://QeHHkvALPob4pgs1hMd9Gw/custom_field/ScannerToken
+                # var-name: SCANNER_TOKEN
+            # - keeper/env-export:
+                # secret-url: keeper://LYg-wdlM5UDzSqFFH6Kyig/field/login
+                # var-name: AQUA_USERNAME
+            # - keeper/env-export:
+                # secret-url: keeper://LYg-wdlM5UDzSqFFH6Kyig/field/password
+                # var-name: AQUA_PASSWORD
+            # - gravitee/docker-load-image-from-workspace:
+                # directory: /tmp/workspace
+                # filename: aquasec-orb-test-project
