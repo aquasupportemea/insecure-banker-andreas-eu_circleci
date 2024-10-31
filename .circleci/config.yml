@@ -1,150 +1,50 @@
 version: 2.1
 
-# orbs:
-  # gravitee: gravitee-io/gravitee@4.7.2
-  # keeper: gravitee-io/keeper@0.6.3
-  # aquasec: gravitee-io/aquasec@dev:alpha
-
-# commands:
-  # enable-corepack:
-    # steps:
-      # - run:
-          # name: Enable Corepack
-          # command: sudo corepack enable
-  # create-docker-context:
-    # steps:
-      # - run:
-          # name: Create docker context for buildx
-          # command: |-
-            # docker context create tls-env
-            # docker buildx create tls-env --use
-  # docker-azure-login:
-    # steps:
-      # - keeper/env-export:
-          # secret-url: keeper://Q721P2LSOPJ9qiXLuf5AHQ/field/login
-          # var-name: AZURE_DOCKER_REGISTRY_USERNAME
-      # - keeper/env-export:
-          # secret-url: keeper://Q721P2LSOPJ9qiXLuf5AHQ/field/password
-          # var-name: AZURE_DOCKER_REGISTRY_PASSWORD
-      # - run:
-          # name: Login to Azure Container Registry
-          # command: echo $AZURE_DOCKER_REGISTRY_PASSWORD | docker login --username $AZURE_DOCKER_REGISTRY_USERNAME --password-stdin graviteeio.azurecr.io
-    # description: Login to Azure Container Registry
-  # docker-azure-logout:
-    # steps:
-      # - run:
-          # name: Logout from Azure Container Registry
-          # command: docker logout graviteeio.azurecr.io
-    # description: Logout from Azure Container Registry
-
 executors:
-  base:
+  default:
     docker:
-      - image: cimg/base:stable
-  node:
-    docker:
-      - image: cimg/node:22.10.0
+      - image: cimg/base:current
 
 jobs:
-  # install:
-    # executor:
-      # name: node
-    # resource_class: small
-    # steps:
-      # - checkout
-      # - enable-corepack
-      # - restore_cache:
-          # name: Restore yarn cache
-          # keys:
-            # - aquasec-orb-test-project-yarn-cache-v1-{{ checksum "yarn.lock" }}
-      # - run:
-          # name: Install dependencies
-          # command: yarn install
-      # - save_cache:
-          # name: Save yarn cache
-          # key: aquasec-orb-test-project-yarn-cache-v1-{{ checksum "yarn.lock" }}
-          # paths:
-            # - .yarn/cache
-          # when: always
-      # - persist_to_workspace:
-          # root: .
-          # paths:
-            # - node_modules
-
-  # build:
-    # executor:
-      # name: node
-    # steps:
-      # - checkout
-      # - attach_workspace:
-          # at: .
-      # - enable-corepack
-      # - run:
-          # name: Build
-          # command: yarn build
-      # - persist_to_workspace:
-          # root: .
-          # paths:
-            # - dist
-
   TRIVY:
     docker:
       - image: aquasec/aqua-scanner
     steps:
       - checkout
-      # - keeper/env-export:
-          # secret-url: keeper://QeHHkvALPob4pgs1hMd9Gw/custom_field/API Key
-          # var-name: AQUA_KEY
-      # - keeper/env-export:
-          # secret-url: keeper://QeHHkvALPob4pgs1hMd9Gw/custom_field/Secret
-          # var-name: AQUA_SECRET
-      # - keeper/env-export:
-          # secret-url: keeper://TIlcGPFq4rN5GvgnZb9hng/field/password
-          # var-name: GITHUB_TOKEN
       - run:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
-            # export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
-            printenv
-            ls ./
-            trivy fs --sast --reachability --scanners misconfig,vuln,secret \
-            --db-repository=public.ecr.aws/aquasecurity/trivy-db:2 \
-            --java-db-repository=public.ecr.aws/aquasecurity/trivy-java-db:1 \
-            .
+            export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
+			trivy fs --sast --reachability --scanners misconfig,vuln,secret \
+            --db-repository=registry.aquasec.com/trivy-db:2 \
+            --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 \
+            --java-db-repository=registry.aquasec.com/trivy-java-db:1 \
+            /github/workspace
           environment:
             ENABLE_TRIVY_STDOUT: 'true'
-            TRIVY_USERNAME: $TRIVY_USERNAME
-            TRIVY_PASSWORD: $TRIVY_PASSWORD
+            TRIVY_USERNAME: $AQUADEV_USERNAME
+            TRIVY_PASSWORD: $AQUADEV_PASS
+            AQUA_KEY: $AQUA_KEY
+            AQUA_SECRET: $AQUA_SECRET
+            GITHUB_TOKEN: $GITHUB_TOKEN
             AQUA_URL: https://api.eu-1.supply-chain.cloud.aquasec.com
             CSPM_URL: https://eu-1.api.cloudsploit.com
             TRIVY_RUN_AS_PLUGIN: 'aqua'
+
   BILLY:
     docker:
-      - image: cimg/base:2024.10
+      - image: cimg/base:current
     steps:
       - checkout
-      - setup_remote_docker:
-          version: default
-          docker_layer_caching: true
-      - attach_workspace:
-          at: /tmp/workspace
-      # - keeper/env-export:
-          # secret-url: keeper://QeHHkvALPob4pgs1hMd9Gw/custom_field/API Key
-          # var-name: AQUA_KEY
-      # - keeper/env-export:
-          # secret-url: keeper://QeHHkvALPob4pgs1hMd9Gw/custom_field/Secret
-          # var-name: AQUA_SECRET
-      # - keeper/env-export:
-          # secret-url: keeper://TIlcGPFq4rN5GvgnZb9hng/field/password
-          # var-name: GITHUB_TOKEN
-      # - gravitee/docker-load-image-from-workspace:
-          # directory: /tmp/workspace
-          filename: aquasec-orb-test-project
+      - setup_remote_docker
+      - run:
+          name: Build docker image
+          command: docker build -t aquasupportemea/insecure-bank-app:${CIRCLE_SHA1} .
       - run:
           name: SBOM Generation - Manifest Generation
           command: |
-            # export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
-            export BILLY_SERVER=https://billy.eu-1.codesec.aquasec.com
+            export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
+			export BILLY_SERVER=https://billy.eu-1.codesec.aquasec.com
             curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
             curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
             if ! cat install.sh.checksum | sha256sum --check; then
@@ -158,58 +58,14 @@ jobs:
               --aqua-key "${AQUA_KEY}" \
               --aqua-secret "${AQUA_SECRET}" \
               --cspm-url https://eu-1.api.cloudsploit.com \
-              --artifact-path "graviteeio.azurecr.io/aquasec-orb-test-project:do_not_use_orb"
+              --artifact-path "aquasupportemea/insecure-bank-app:${CIRCLE_SHA1}"
 
 workflows:
-  # version: 2
-  branch_validate:
+  build_and_scan:
     jobs:
-      # - install
-      # - build:
-          # requires:
-            # - install
-      # - gravitee/common_docker_build:
-          # name: Build Docker image
-          # requires:
-            # - build
-          # dockerImage: aquasec-orb-test-project
-          # dockerTag: do_not_use_orb
-          # dockerFilePath: ./Dockerfile
-          # dockerBuildPath: ./
-          # registry: graviteeio.azurecr.io
-          # username: keeper://Q721P2LSOPJ9qiXLuf5AHQ/field/login
-          # password: keeper://Q721P2LSOPJ9qiXLuf5AHQ/field/password
-          # saveInWorkspace: true
-          # context: cicd-orchestrator
       - TRIVY:
-          # requires:
-            # - install
-          context: cicd-orchestrator
+          context: aqua-secrets
       - BILLY:
-          # requires:
-            # - Build Docker image
-          context: cicd-orchestrator
-      # - aquasec/docker_image_scan:
-          # requires:
-            # - Build Docker image
-          # context: cicd-orchestrator
-          # scanner_url: https://82fb8f75da.cloud.aquasec.com
-          # built_docker_image_file: /tmp/workspace/built-docker-images.txt
-          # skip_remote_docker_step: true
-          # pre-steps:
-            # - attach_workspace:
-                # at: /tmp/workspace
-            # - setup_remote_docker:
-                # version: default
-            # - keeper/env-export:
-                # secret-url: keeper://QeHHkvALPob4pgs1hMd9Gw/custom_field/ScannerToken
-                # var-name: SCANNER_TOKEN
-            # - keeper/env-export:
-                # secret-url: keeper://LYg-wdlM5UDzSqFFH6Kyig/field/login
-                # var-name: AQUA_USERNAME
-            # - keeper/env-export:
-                # secret-url: keeper://LYg-wdlM5UDzSqFFH6Kyig/field/password
-                # var-name: AQUA_PASSWORD
-            # - gravitee/docker-load-image-from-workspace:
-                # directory: /tmp/workspace
-                # filename: aquasec-orb-test-project
+          requires:
+            - TRIVY
+          context: aqua-secrets
