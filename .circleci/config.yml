@@ -157,7 +157,7 @@ jobs:
               --artifact-path "graviteeio.azurecr.io/aquasec-orb-test-project:do_not_use_orb"
 
 workflows:
-  version: 2
+  # version: 2
   branch_validate:
     jobs:
       # - install
@@ -177,10 +177,10 @@ workflows:
           # password: keeper://Q721P2LSOPJ9qiXLuf5AHQ/field/password
           # saveInWorkspace: true
           # context: cicd-orchestrator
-      # - TRIVY:
-          # # requires:
-            # # - install
-          # context: cicd-orchestrator
+      - TRIVY:
+          # requires:
+            # - install
+          context: cicd-orchestrator
       - BILLY:
           # requires:
             # - Build Docker image
