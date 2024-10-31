@@ -104,6 +104,8 @@ jobs:
       - run:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
+            printenv
+            ls ./
             trivy fs --sast --reachability --scanners misconfig,vuln,secret \
             --db-repository=public.ecr.aws/aquasecurity/trivy-db:2 \
             --java-db-repository=public.ecr.aws/aquasecurity/trivy-java-db:1 \
@@ -116,10 +118,8 @@ jobs:
             CSPM_URL: https://eu-1.api.cloudsploit.com
             TRIVY_RUN_AS_PLUGIN: 'aqua'
   BILLY:
-    executor:
-      name: base
-    # docker:
-      # - image: cimg/base:2024.10
+    docker:
+      - image: cimg/base:2024.10
     steps:
       - checkout
       - setup_remote_docker:
