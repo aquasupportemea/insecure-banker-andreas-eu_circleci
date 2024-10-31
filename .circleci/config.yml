@@ -22,8 +22,8 @@ jobs:
             /github/workspace
           environment:
             ENABLE_TRIVY_STDOUT: 'true'
-            TRIVY_USERNAME: $AQUADEV_USERNAME
-            TRIVY_PASSWORD: $AQUADEV_PASS
+            TRIVY_USERNAME: $TRIVY_USERNAME
+            TRIVY_PASSWORD: $TRIVY_PASSWORD
             AQUA_KEY: $AQUA_KEY
             AQUA_SECRET: $AQUA_SECRET
             GITHUB_TOKEN: $GITHUB_TOKEN
