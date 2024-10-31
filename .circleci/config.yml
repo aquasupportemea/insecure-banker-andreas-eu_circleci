@@ -62,7 +62,7 @@ workflows:
       - TRIVY:
           context: aqua-secrets
       - BILLY:
-          # requires:
-            # - TRIVY
+          requires:
+            - TRIVY
           context: aqua-secrets
 
