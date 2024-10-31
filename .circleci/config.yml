@@ -19,8 +19,8 @@ jobs:
             export CSPM_URL=https://eu-1.api.cloudsploit.com
             export TRIVY_RUN_AS_PLUGIN=aqua
             export ENABLE_TRIVY_STDOUT='true'
-            export TRIVY_USERNAME=$TRIVY_USERNAME
-            export TRIVY_PASSWORD='$TRIVY_PASSWORD'
+            export TRIVY_USERNAME='andreas.muller@aquasec.com'
+            export TRIVY_PASSWORD='jufean!0521'
 
             trivy fs --sast --reachability --scanners misconfig,vuln,secret --db-repository=registry.aquasec.com/trivy-db:2 --checks-bundle-repository=registry.aquasec.com/trivy-checks:1 --java-db-repository=registry.aquasec.com/trivy-java-db:1 .
 
