@@ -1,5 +1,5 @@
 FROM node:16-alpine
-####
+####0
 WORKDIR /usr/src/app
 
 RUN touch /tmp/ready
