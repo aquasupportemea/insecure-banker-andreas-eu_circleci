@@ -14,9 +14,10 @@ jobs:
       - run:
           name: Aqua code scanning (SCA, IaC, SAST)
           command: |
-            echo << pipeline.trigger_parameters.github_app.repo_name >>
-            echo << pipeline.trigger_parameters.github_app.repo_url >>
+            # echo << pipeline.trigger_parameters.github_app.repo_name >>
+            # echo << pipeline.trigger_parameters.github_app.repo_url >>
             # export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
+            export CIRCLE_REPOSITORY_URL=<< pipeline.trigger_parameters.github_app.repo_url >>
             export AQUA_URL=https://api.eu-1.supply-chain.cloud.aquasec.com
             export CSPM_URL=https://eu-1.api.cloudsploit.com
             export TRIVY_RUN_AS_PLUGIN=aqua
