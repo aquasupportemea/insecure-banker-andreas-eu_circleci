@@ -42,6 +42,7 @@ jobs:
           command: |
             # immanent CIRCLE_REPOSITORY_URL is not available for GitHub App, hence the need to explicitly define it
             export CIRCLE_REPOSITORY_URL=<< pipeline.trigger_parameters.github_app.repo_url >>
+            # export CIRCLE_REPOSITORY_URL=https://github.com/aquasupportemea/insecure-banker-andreas-eu_circleci.git
             export BILLY_SERVER=https://billy.eu-1.codesec.aquasec.com
             curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
             curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
